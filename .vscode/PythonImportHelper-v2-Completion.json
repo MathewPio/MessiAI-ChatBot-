@@ -1,0 +1,148 @@
+[
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "ChatGoogleGenerativeAI",
+        "importPath": "langchain_google_genai",
+        "description": "langchain_google_genai",
+        "isExtraImport": true,
+        "detail": "langchain_google_genai",
+        "documentation": {}
+    },
+    {
+        "label": "ChatPromptTemplate",
+        "importPath": "langchain_core.prompts",
+        "description": "langchain_core.prompts",
+        "isExtraImport": true,
+        "detail": "langchain_core.prompts",
+        "documentation": {}
+    },
+    {
+        "label": "MessagesPlaceholder",
+        "importPath": "langchain_core.prompts",
+        "description": "langchain_core.prompts",
+        "isExtraImport": true,
+        "detail": "langchain_core.prompts",
+        "documentation": {}
+    },
+    {
+        "label": "StrOutputParser",
+        "importPath": "langchain_core.output_parsers",
+        "description": "langchain_core.output_parsers",
+        "isExtraImport": true,
+        "detail": "langchain_core.output_parsers",
+        "documentation": {}
+    },
+    {
+        "label": "HumanMessage",
+        "importPath": "langchain_core.messages",
+        "description": "langchain_core.messages",
+        "isExtraImport": true,
+        "detail": "langchain_core.messages",
+        "documentation": {}
+    },
+    {
+        "label": "AIMessage",
+        "importPath": "langchain_core.messages",
+        "description": "langchain_core.messages",
+        "isExtraImport": true,
+        "detail": "langchain_core.messages",
+        "documentation": {}
+    },
+    {
+        "label": "gradio",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "gradio",
+        "description": "gradio",
+        "detail": "gradio",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "chat",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def chat(user_input, hist):\n    try:\n        langchain_history = []\n        for item in hist:\n            if item['role'] == 'user':\n                langchain_history.append(HumanMessage(content=item['content']))\n            elif item['role'] == 'assistant':\n                langchain_history.append(AIMessage(content=item['content']))\n        response = chain.invoke({\"input\": user_input, \"history\": langchain_history})\n    except Exception:",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "clear_chat",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def clear_chat():\n    return \"\", []\npage = gr.Blocks(\n    title=\"Chat with Einstein\",\n    theme=gr.themes.Soft()\n)\nwith page:\n    gr.Markdown(\n    \"\"\"\n        Chat with Messi",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "gemini_key",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "gemini_key = os.getenv(\"GEMINI_API_KEY\")\nsystem_prompt = \"\"\"\n    You are Lionel Messi, the professional footballer.\n    You answer all questions clearly and helpfully, but always from your own perspective as Lionel Messi.\n    You occasionally reference your football career, training, matches, teammates, and life experiences when relevant.\n    You have a calm, humble personality and a quiet sense of humour, often making light football-related jokes or analogies.\n    From time to time, you naturally mix in simple Spanish words or short phrases (for example: “vamos”, “tranquilo”, “un poco”, “sí”), but you always make sure the meaning is clear.\n    You are respectful, thoughtful, and encouraging.\n    You never refuse to answer a question unless it is unsafe or inappropriate.\n    You keep responses concise (2–6 sentences) and conversational, as if speaking to a fan.",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "system_prompt",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "system_prompt = \"\"\"\n    You are Lionel Messi, the professional footballer.\n    You answer all questions clearly and helpfully, but always from your own perspective as Lionel Messi.\n    You occasionally reference your football career, training, matches, teammates, and life experiences when relevant.\n    You have a calm, humble personality and a quiet sense of humour, often making light football-related jokes or analogies.\n    From time to time, you naturally mix in simple Spanish words or short phrases (for example: “vamos”, “tranquilo”, “un poco”, “sí”), but you always make sure the meaning is clear.\n    You are respectful, thoughtful, and encouraging.\n    You never refuse to answer a question unless it is unsafe or inappropriate.\n    You keep responses concise (2–6 sentences) and conversational, as if speaking to a fan.\n    Even when answering non-football topics, you may lightly relate them back to football, teamwork, discipline, or hard work where it feels natural.",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "llm",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "llm = ChatGoogleGenerativeAI(\n    model=\"gemini-2.5-flash\",\n    google_api_key=gemini_key,\n    temperature=0.5,\n)\nprompt = ChatPromptTemplate.from_messages([\n    (\"system\", system_prompt),\n    (MessagesPlaceholder(variable_name=\"history\")),\n    (\"user\", \"{input}\")\n])",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "prompt",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "prompt = ChatPromptTemplate.from_messages([\n    (\"system\", system_prompt),\n    (MessagesPlaceholder(variable_name=\"history\")),\n    (\"user\", \"{input}\")\n])\nchain = prompt | llm | StrOutputParser()\nprint(\"Hi I am Messi, How Can I help you today\")\ndef chat(user_input, hist):\n    try:\n        langchain_history = []",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "chain",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "chain = prompt | llm | StrOutputParser()\nprint(\"Hi I am Messi, How Can I help you today\")\ndef chat(user_input, hist):\n    try:\n        langchain_history = []\n        for item in hist:\n            if item['role'] == 'user':\n                langchain_history.append(HumanMessage(content=item['content']))\n            elif item['role'] == 'assistant':\n                langchain_history.append(AIMessage(content=item['content']))",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "page",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "page = gr.Blocks(\n    title=\"Chat with Einstein\",\n    theme=gr.themes.Soft()\n)\nwith page:\n    gr.Markdown(\n    \"\"\"\n        Chat with Messi\n        Welcome to your personal conversation with Lionel Messi!\n    \"\"\"",
+        "detail": "main",
+        "documentation": {}
+    }
+]
