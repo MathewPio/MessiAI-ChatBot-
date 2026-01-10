@@ -58,41 +58,36 @@ def chat(user_input, hist):
     except Exception:
         response = "⚠️ I’m out of energy today, amigo. The free API limit has been reached. Try again later, tranquilo."
     
-    EINSTEIN_IMG = "https://res.cloudinary.com/dps3iqjab/image/upload/v1767916575/messi2_i4a4go.jpg"
-    
-    assistant_html = f"""
-    <div style="display:flex; align-items:flex-start; gap:8px;">
-        <img 
-            src="{EINSTEIN_IMG}"
-            style="
-                width:32px;
-                height:32px;
-                border-radius:50%;
-                object-fit:cover;
-                border:1px solid #ddd;
-                flex-shrink:0;
-            "
-        />
-        <div style="
-            max-width:500px;
-            line-height:1.4;
-            padding:8px 12px;
-            border-radius:12px;
-        ">
-            {response}
-        </div>
-    </div>
-    """
+    # MESSI_IMG = "https://res.cloudinary.com/dps3iqjab/image/upload/v1767916575/messi2_i4a4go.jpg"
+
+    # assistant_md = f"""
+    # <img src="{MESSI_IMG}"
+    #     style="
+    #         width:28px;
+    #         height:28px;
+    #         max-width:28px;
+    #         max-height:28px;
+    #         border-radius:50%;
+    #         object-fit:cover;
+    #         display:inline-block;
+    #         vertical-align:middle;
+    #         margin-right:8px;
+    #     " />
+
+    # {response}
+    # """
+
     
     hist = hist + [
         {"role": "user", "content": user_input},
         {
          "role": "assistant",
-         "content": assistant_html
+         "content": response
         },
     ]
     
     return "", hist
+
 
 def clear_chat():
     return "", []
@@ -111,7 +106,7 @@ with page:
     """
     )
     
-    chatbot = gr.Chatbot(show_label=False)
+    chatbot = gr.Chatbot(show_label=False, render_markdown=True, sanitize_html=False )
     
     msg = gr.Textbox(show_label=False, placeholder="Ask Messi anything")
     msg.submit(chat, [msg, chatbot], [msg, chatbot])
